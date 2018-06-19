@@ -1,17 +1,13 @@
 <?php
 /**
  * CSV 檔案寫入
- * @param  string $file        [description]
- * @param  array 	$headerdata  [description]
- * @param  two array 	$contentdata [description]
- * @return [type]              [description]
+ * @param  String $file        file a path String
+ * @param  Array 	$headerdata  首列欄位的資料
+ * @param  Two Array 	$contentdata 傳入兩層的陣列
  */
 function writecsv($file, $headerdata, $contentdata) {
-	if (! file_exists($file)) {
-		return 'error';
-	}
 
-	$fp = fopen($file, 'w');
+	$fp = fopen($file, 'w+');
 	
 	if (!empty($headerdata)) {
 		fputs($fp,mb_convert_encoding(implode(",",$headerdata),"Big5","UTF-8")."\r\n"); //這是要轉成UTF-8編碼的語法
@@ -28,10 +24,10 @@ function writecsv($file, $headerdata, $contentdata) {
 
 /**
  * 讀取csv檔
- * @param  [type] $file         [description]
- * @param  [type] $length       [description]
- * @param  [type] $parse_header [description]
- * @return [type]               [description]
+ * @param  String $file         file a path String
+ * @param  Int $length       要讀取的長度
+ * @param  bool $parse_header 是否讀取第一列資訊
+ * @return Array               回傳讀取結果
  */
 function readcsv($file, $length=8000, $parse_header=True) {
 	if (! file_exists($file)) {
